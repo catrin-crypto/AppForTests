@@ -1,5 +1,6 @@
 package com.geekbrains.tests.presenter.search
 
+import android.view.View
 import com.geekbrains.tests.model.SearchResponse
 import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.repository.GitHubRepository.GitHubRepositoryCallback
@@ -19,9 +20,19 @@ internal class SearchPresenter internal constructor(
     private val repository: GitHubRepository
 ) : PresenterSearchContract, GitHubRepositoryCallback {
 
+    private var presentersView: View? = null
+
     override fun searchGitHub(searchQuery: String) {
         viewContract.displayLoading(true)
         repository.searchGithub(searchQuery, this)
+    }
+
+    override fun onAttach(v: View) {
+        presentersView = v
+    }
+
+    override fun onDetach() {
+        presentersView = null
     }
 
     override fun handleGitHubResponse(response: Response<SearchResponse?>?) {
@@ -46,5 +57,8 @@ internal class SearchPresenter internal constructor(
     override fun handleGitHubError() {
         viewContract.displayLoading(false)
         viewContract.displayError()
+    }
+    fun getView(): View? {
+        return presentersView
     }
 }

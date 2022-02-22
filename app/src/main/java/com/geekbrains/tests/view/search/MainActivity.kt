@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.R
 import com.geekbrains.tests.model.SearchResult
+import com.geekbrains.tests.presenter.details.PresenterDetailsContract
 import com.geekbrains.tests.presenter.search.PresenterSearchContract
 import com.geekbrains.tests.presenter.search.SearchPresenter
 import com.geekbrains.tests.repository.GitHubApi
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        presenter.onAttach(findViewById(R.id.mainActivityView))
         setUI()
     }
 
@@ -99,5 +101,12 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
 
     companion object {
         const val BASE_URL = "https://api.github.com"
+    }
+    internal fun getPresenter(): PresenterSearchContract {
+        return presenter
+    }
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
     }
 }
