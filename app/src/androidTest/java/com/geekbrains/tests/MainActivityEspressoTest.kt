@@ -30,13 +30,23 @@ class MainActivityEspressoTest {
         onView(withId(R.id.searchEditText)).perform(click())
         onView(withId(R.id.searchEditText)).perform(replaceText("algol"), closeSoftKeyboard())
         onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
-        if(BuildConfig.TYPE == MainActivity.FAKE){
+        if (BuildConfig.TYPE == MainActivity.FAKE) {
             onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
 
-        }else
-        onView(isRoot()).perform(delay())
-        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2283")))
+        } else {
+            onView(isRoot()).perform(delay())
+            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2900")))
+        }
+    }
 
+    @Test
+    fun editText_IsDisplayed() {
+        onView(withId(R.id.searchEditText)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun editText_IsEffectivelyVisible() {
+        onView(withId(R.id.searchEditText)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
     @After
@@ -47,9 +57,9 @@ class MainActivityEspressoTest {
     private fun delay(): ViewAction {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> = isRoot()
-            override fun getDescription(): String = "wait for $2 seconds"
+            override fun getDescription(): String = "wait for $10 seconds"
             override fun perform(uiController: UiController?, view: View?) {
-                uiController?.loopMainThreadForAtLeast(2000)
+                uiController?.loopMainThreadForAtLeast(10000)
             }
         }
 
