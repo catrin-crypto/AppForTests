@@ -6,7 +6,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.geekbrains.tests"
@@ -66,6 +66,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //Automator
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     //Mockito
     testImplementation "org.mockito:mockito-core:2.18.0"
     testImplementation 'org.mockito:mockito-inline:2.8.9'
