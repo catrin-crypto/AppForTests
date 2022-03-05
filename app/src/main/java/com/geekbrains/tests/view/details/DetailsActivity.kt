@@ -3,6 +3,7 @@ package com.geekbrains.tests.view.details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.R
 import com.geekbrains.tests.presenter.details.DetailsPresenter
@@ -17,6 +18,7 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
+        presenter.onAttach(findViewById(R.id.mainDetailsView))
         setUI()
     }
 
@@ -46,5 +48,14 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
                 putExtra(TOTAL_COUNT_EXTRA, totalCount)
             }
         }
+    }
+    internal fun getPresenter(): PresenterDetailsContract {
+        return presenter
+    }
+
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
+
     }
 }
