@@ -10,6 +10,8 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
+import com.geekbrains.tests.TEST_NUMBER_OF_RESULTS_PLUS_1
+import com.geekbrains.tests.TEST_NUMBER_OF_RESULTS_ZERO
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -133,7 +135,7 @@ class BehaviorTest {
         //так как мы кликаем по кнопке не отправляя никаких поисковых запросов.
         //Чтобы проверить отображение определенного количества репозиториев,
         //вам в одном и том же методе нужно отправить запрос на сервер и открыть DetailsScreen.
-        Assert.assertEquals(changedText.text, "Number of results: 0")
+        Assert.assertEquals(changedText.text, TEST_NUMBER_OF_RESULTS_ZERO)
     }
 
     @Test
@@ -155,7 +157,7 @@ class BehaviorTest {
             )
         //Убеждаемся, что поле видно и содержит предполагаемый текст.
         //Обратите внимание, что текст должен быть "Number of results: 1",
-        Assert.assertEquals(changedText.text, "Number of results: 1")
+        Assert.assertEquals(changedText.text, TEST_NUMBER_OF_RESULTS_PLUS_1)
         ClickDecButton()
         uiDevice.waitForIdle()
         val changed2Text =
@@ -165,7 +167,7 @@ class BehaviorTest {
             )
         //Убеждаемся, что поле видно и содержит предполагаемый текст.
         //Обратите внимание, что текст должен быть "Number of results: 0",
-        Assert.assertEquals(changed2Text.text, "Number of results: 0")
+        Assert.assertEquals(changed2Text.text, TEST_NUMBER_OF_RESULTS_ZERO)
 
     }
 
