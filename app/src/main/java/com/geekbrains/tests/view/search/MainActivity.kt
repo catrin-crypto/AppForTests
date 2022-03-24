@@ -11,6 +11,7 @@ import com.geekbrains.tests.model.SearchResult
 import com.geekbrains.tests.presenter.RepositoryContract
 import com.geekbrains.tests.presenter.search.PresenterSearchContract
 import com.geekbrains.tests.presenter.search.SearchPresenter
+import com.geekbrains.tests.repository.FakeGithubRepository
 import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.repository.GitHubApi
 import com.geekbrains.tests.view.details.DetailsActivity
@@ -22,7 +23,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), ViewSearchContract {
 
     private val adapter = SearchResultAdapter()
-    private val presenter: PresenterSearchContract = SearchPresenter(this, createRepository())
+    private val presenter: PresenterSearchContract = SearchPresenter(this, createFakeRepository())
     private var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +45,9 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
     }
+private fun createFakeRepository(): RepositoryContract{
+    return FakeGithubRepository()
+}
 
     private fun setQueryListener() {
         searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
