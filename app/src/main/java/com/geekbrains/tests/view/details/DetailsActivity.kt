@@ -3,6 +3,7 @@ package com.geekbrains.tests.view.details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.R
 import com.geekbrains.tests.presenter.details.DetailsPresenter
@@ -10,31 +11,17 @@ import com.geekbrains.tests.presenter.details.PresenterDetailsContract
 import kotlinx.android.synthetic.main.activity_details.*
 import java.util.*
 
-class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
-
-    private val presenter: PresenterDetailsContract = DetailsPresenter(this)
+class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        setUI()
-    }
-
-    private fun setUI() {
-        val count = intent.getIntExtra(TOTAL_COUNT_EXTRA, 0)
-        presenter.setCounter(count)
-        setCountText(count)
-        decrementButton.setOnClickListener { presenter.onDecrement() }
-        incrementButton.setOnClickListener { presenter.onIncrement() }
-    }
-
-    override fun setCount(count: Int) {
-        setCountText(count)
-    }
-
-    private fun setCountText(count: Int) {
-        totalCountTextView.text =
-            String.format(Locale.getDefault(), getString(R.string.results_count), count)
+//        presenter.onAttach(findViewById(R.id.mainDetailsView))
+//        setUI()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.detailsFragmentContainer,
+            DetailsFragment.newInstance(intent.getIntExtra(TOTAL_COUNT_EXTRA,0)))
+            .commitAllowingStateLoss()
     }
 
     companion object {
@@ -47,4 +34,15 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
             }
         }
     }
+
+
+//    internal fun getPresenter(): PresenterDetailsContract {
+//        return presenter
+//    }
+//
+//    override fun onDestroy() {
+//        presenter.onDetach()
+//        super.onDestroy()
+//
+//    }
 }
